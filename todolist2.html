@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.slash {
+  text-decoration: line-through;
+}
+
+</style>
+</head>
+<body>
+<h1>Input and Display Message</h1>
+
+
+<p>Enter a message</p>
+
+  <input type="text" id="msg" ><br>
+   <input type="date" id="dat" ><br>
+      <input type="color" id="col" ><br>
+  <button onclick="displayMessage()">Click me</button>
+
+
+<p id="showinputhere"></p>
+<div id="myDIV">
+</div>
+<script>
+
+var word=[];
+var col=[];
+var dat=[];
+var clicked=[];
+var num =0;
+var t =""
+
+function displayMessage(){
+    word[num] = document.getElementById("msg").value;
+    col[num] = document.getElementById("col").value;
+    dat[num] = document.getElementById("dat").value;
+    
+    if (word[num]){
+    t ="</br>"+ word[num] +"   "+ dat[num]+"   "+ col[num];
+
+      //  document.getElementById("showinputhere").innerHTML = t
+      
+            const para = document.createElement("p");
+         
+    para.innerHTML = t;
+ 
+    clicked[num]=0;
+  para.style.color = col[num]
+ para.setAttribute('id','x'+num)
+ para.setAttribute('class','')
+para.setAttribute('onclick','bbb("x'+num+'")')
+    document.getElementById("myDIV").appendChild(para);
+    
+    
+       const delb = document.createElement("button");
+         delb.innerHTML = "del";
+         delb.setAttribute('id','y'+num)
+         delb.setAttribute('onclick','deleter("y'+num+'","x'+num+'","z'+num+'")')
+        document.getElementById("myDIV").appendChild(delb);
+   // document.getElementById('x'+num).appendChild(delb);
+  
+
+  const crossb = document.createElement("button");
+         crossb.innerHTML = "cross";
+         crossb.setAttribute('id','z'+num)
+         crossb.setAttribute('onclick','bbb("x'+num+'")')
+        document.getElementById("myDIV").appendChild(crossb);
+
+
+
+        
+    }
+    else{
+        document.getElementById("showinputhere").innerHTML = "No message set";
+    }
+
+    num =num + 1;
+}
+
+
+function myFunction2() {
+ 
+      document.getElementById("showinputhere").innerHTML = "it was pressed";
+para.style.color = white;
+}
+
+
+function deleter(a,b,c) {
+ var tempid = a.substr(1);
+document.getElementById(a).remove();
+document.getElementById(b).remove();
+document.getElementById(c).remove();
+  
+}
+
+
+
+function bbb(a){
+
+var x = document.getElementById(a);
+var tempid = a.substr(1);
+if(clicked[tempid]==1){
+clicked[tempid]=0;
+x.classList.remove('slash');
+}
+else{
+
+clicked[tempid]=1;
+x.classList.add('slash');
+}
+}
+
+    /**
+    for (let i = 0; i <= num; i++){
+    const para2 = document.createElement("p");
+    para2.innerHTML = "</br>"+ word[i] +"   "+ dat[i]+"   "+ col[i];
+     document.getElementById("myDIV").appendChild(para2);
+    // document.getElementById("showinputhere").innerHTML =t
+    instead of onclick create each new button make it re create the whole array
+     }
+    **/
+</script>
+
+</body>
+
+</html>
