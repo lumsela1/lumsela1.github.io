@@ -132,7 +132,7 @@ var dat=[];
 var clicked=[];
 var minclicked=[];
 var num =0;
-var minnum = 0;
+var minnum =0;
 var flag = 0;
 var t =""
 var y = ""
@@ -148,7 +148,7 @@ function displayMessage(){
     modal.style.display = "none";
     
     if (document.getElementById("msg").value){
-    t ="</br>"+ word[num] +"   "+ dat[num]+"   "+ col[num];
+    t ="</br>"+ word[num] +"   "+ dat[num];
 y = 'd'+num;
       //  document.getElementById("showinputhere").innerHTML = t
      const house = document.createElement("div");
@@ -207,11 +207,6 @@ para.setAttribute('onclick','bbb("x'+num+'")')
 }
 
 
-function myFunction2() {
- 
-      document.getElementById("showinputhere").innerHTML = "it was pressed";
-para.style.color = white;
-}
 
 
 function deleter(a,b,c) {
@@ -263,7 +258,7 @@ document.getElementById("Trash").appendChild(x);
 function findmajor(){      
      for (let i = 0; i <= num; i++) {
       const majb = document.createElement("button");
-        majb.innerHTML = "major"+i;
+        majb.innerHTML = "major"+(i+1);
          majb.setAttribute('id','m'+i)
          majb.setAttribute('onclick','pick("m'+i+'")')
          if( document.getElementById("x"+i )){
@@ -304,12 +299,12 @@ function findmajor(){
 
     para.innerHTML = t;
  var tempid2 = a.substr(1);
-    minclicked[num]=0;
+    minclicked[minnum]=0;
   para.style.color = mincol[minnum]
  para.setAttribute('id','mx'+minnum)
  para.setAttribute('class','')
  para.classList.add('ind');
-para.setAttribute('onclick','crossmin("x'+num+'")')
+para.setAttribute('onclick','crossmin("x'+minnum+'")')
   document.getElementById( "d"+tempid2 ).appendChild(para);
  //divi.appendChild(para);
 
@@ -330,7 +325,7 @@ para.setAttribute('onclick','crossmin("x'+num+'")')
         crossb.setAttribute('id','mz'+minnum)
         crossb.setAttribute('class','')
  crossb.classList.add('ind');
-         crossb.setAttribute('onclick','crossmin("x'+num+'","y'+num+'","z'+num+'")')
+         crossb.setAttribute('onclick','crossmin("x'+minnum+'")')
          document.getElementById( "d"+tempid2 ).appendChild(crossb);
 
 
@@ -380,8 +375,8 @@ var x =document.getElementById("mx"+tempid);
 var y =document.getElementById("y" +tempid);
 var z =document.getElementById("z" +tempid);
 
- if(minclicked[tempid]==1){
-minclicked[tempid]=0;
+ if(minclicked[minnum]==1){
+minclicked[minnum]=0;
 //mx.style.color = mincol[tempid];
 x.classList.remove('slash'); 
 //document.getElementById("h"+tempid).appendChild(x);
@@ -390,7 +385,7 @@ x.classList.remove('slash');
 }
 else{
 
-clicked[tempid]=1;
+minclicked[minnum]=1;
 x.classList.add('slash');
 //x.style.color = "gray";
 //document.getElementById("Trash").appendChild(x);
