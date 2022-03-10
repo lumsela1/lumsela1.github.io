@@ -1,48 +1,168 @@
 <!DOCTYPE html>
 <html>
 <head>
- <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 .slash {
   text-decoration: line-through;
+
 }
 
+.ind {
+margin-left: 40px;
+
+}
+.flo {
+float: right
+
+}
+
+
+body {font-family: Arial, Helvetica, sans-serif;}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
 </style>
 </head>
 <body>
-<h1>Input and Display Message</h1>
+<body style="background-color:powderblue;">
+<h2>To Do List</h2>
+<p id="showinputhere"></p>
+<!-- Trigger/Open The Modal -->
+<button id="myBtn">Open Modal</button>
 
+<!-- The Modal -->
+<div id="myModal" class="modal">
 
-<p>Enter a message</p>
-
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <p>Enter your task.</p>
+    
   <input type="text" id="msg" ><br>
    <input type="date" id="dat" ><br>
       <input type="color" id="col" ><br>
-  <button onclick="displayMessage()">Click me</button>
+  <button id="mainb" onclick="displayMessage()">Click me</button>
+<button id="minnb" onclick="findmajor()">minor</button>
+    
+    
+  </div>
 
+</div>
 
 <p id="showinputhere"></p>
 <div id="myDIV">
 </div>
+
+<div id="Trash">
+</div>
 <script>
 
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+
+
+
+var minword=[];
 var word=[];
 var col=[];
+var mincol=[];
 var dat=[];
 var clicked=[];
+var minclicked=[];
 var num =0;
+var minnum = 0;
+var flag = 0;
 var t =""
+var y = ""
+
+
+
 
 function displayMessage(){
     word[num] = document.getElementById("msg").value;
     col[num] = document.getElementById("col").value;
     dat[num] = document.getElementById("dat").value;
     
-    if (word[num]){
+    modal.style.display = "none";
+    
+    if (document.getElementById("msg").value){
     t ="</br>"+ word[num] +"   "+ dat[num]+"   "+ col[num];
-
+y = 'd'+num;
       //  document.getElementById("showinputhere").innerHTML = t
+     const house = document.createElement("div");
+       house.setAttribute('id','h'+num)
+       document.getElementById("myDIV").appendChild(house);
+ 
+   
+     
+     const divi = document.createElement("div");
+       divi.setAttribute('id','d'+num)
+ house.appendChild(divi);
+ 
+ 
+      
       
             const para = document.createElement("p");
          
@@ -53,29 +173,34 @@ function displayMessage(){
  para.setAttribute('id','x'+num)
  para.setAttribute('class','')
 para.setAttribute('onclick','bbb("x'+num+'")')
-    document.getElementById("myDIV").appendChild(para);
+    divi.appendChild(para);
     
     
        const delb = document.createElement("button");
          delb.innerHTML = "del";
          delb.setAttribute('id','y'+num)
-         delb.setAttribute('onclick','deleter("y'+num+'","x'+num+'","z'+num+'")')
-        document.getElementById("myDIV").appendChild(delb);
+          delb.setAttribute('class','')
+           delb.classList.add('flo');
+         delb.setAttribute('onclick','deleter("d'+num+'")')
+        divi.appendChild(delb);
    // document.getElementById('x'+num).appendChild(delb);
   
 
   const crossb = document.createElement("button");
          crossb.innerHTML = "cross";
          crossb.setAttribute('id','z'+num)
-         crossb.setAttribute('onclick','bbb("x'+num+'")')
-        document.getElementById("myDIV").appendChild(crossb);
+          crossb.setAttribute('class','')
+          crossb.classList.add('flo');
+         crossb.setAttribute('onclick','bbb("x'+num+'","y'+num+'","z'+num+'")')
+        divi.appendChild(crossb);
 
 
 
         
     }
     else{
-        document.getElementById("showinputhere").innerHTML = "No message set";
+    
+       // document.getElementById("showinputhere").innerHTML = "No message set";
     }
 
     num =num + 1;
@@ -92,8 +217,8 @@ para.style.color = white;
 function deleter(a,b,c) {
  var tempid = a.substr(1);
 document.getElementById(a).remove();
-document.getElementById(b).remove();
-document.getElementById(c).remove();
+//document.getElementById(b).remove();
+//document.getElementById(c).remove();
   
 }
 
@@ -101,30 +226,183 @@ document.getElementById(c).remove();
 
 function bbb(a){
 
-var x = document.getElementById(a);
+
+
+//var x = document.getElementById(a);
+ //const y =  document.getElementById(b); 
+  // const z =  document.getElementById(b);
+
 var tempid = a.substr(1);
+
+var x =document.getElementById("d"+tempid);
+var y =document.getElementById("h" +tempid);
+var z =document.getElementById("z" +tempid);
+
 if(clicked[tempid]==1){
 clicked[tempid]=0;
-x.classList.remove('slash');
+x.style.color = col[tempid];
+x.classList.remove('slash'); 
+document.getElementById("h"+tempid).appendChild(x);
+//document.getElementById("d"+tempid).appendChild(y);
+//document.getElementById("d"+tempid).appendChild(z);
 }
 else{
 
 clicked[tempid]=1;
 x.classList.add('slash');
+x.style.color = "gray";
+document.getElementById("Trash").appendChild(x);
+//document.getElementById("Trash").appendChild(y);
+//document.getElementById("Trash").appendChild(z);
+
 }
 }
 
-    /**
-    for (let i = 0; i <= num; i++){
-    const para2 = document.createElement("p");
-    para2.innerHTML = "</br>"+ word[i] +"   "+ dat[i]+"   "+ col[i];
-     document.getElementById("myDIV").appendChild(para2);
-    // document.getElementById("showinputhere").innerHTML =t
-    instead of onclick create each new button make it re create the whole array
-     }
-    **/
+
+
+function findmajor(){      
+     for (let i = 0; i <= num; i++) {
+      const majb = document.createElement("button");
+        majb.innerHTML = "major"+i;
+         majb.setAttribute('id','m'+i)
+         majb.setAttribute('onclick','pick("m'+i+'")')
+         if( document.getElementById("x"+i )){
+        document.getElementById("d"+i ).appendChild(majb);
+        }  
+}
+  modal.style.display = "none";
+  
+  flag =1;
+  if(word[0]){
+   document.getElementById("myBtn" ).disabled = true;
+}
+
+
+     for (let j = 0; j <= num; j++) {
+         if( document.getElementById("mx"+j )){
+        document.getElementById("my"+j ).disabled = true;
+          document.getElementById("mz"+j ).disabled = true;
+          }
+           if( document.getElementById("x"+j )){
+          document.getElementById("y"+j ).disabled = true;
+          document.getElementById("z"+j ).disabled = true;
+            document.getElementById("x"+j ).disabled = true;
+        }  
+
+}
+ 
+  
+  }
+  
+  
+  function pick(a){
+ word[num] = document.getElementById("msg").value;
+   mincol[minnum] = document.getElementById("col").value;
+    dat[num] = document.getElementById("dat").value;
+     t ="</br>"+ word[num] +"   "+ dat[num]+"   ";
+            const para = document.createElement("p");
+
+    para.innerHTML = t;
+ var tempid2 = a.substr(1);
+    minclicked[num]=0;
+  para.style.color = mincol[minnum]
+ para.setAttribute('id','mx'+minnum)
+ para.setAttribute('class','')
+ para.classList.add('ind');
+para.setAttribute('onclick','crossmin("x'+num+'")')
+  document.getElementById( "d"+tempid2 ).appendChild(para);
+ //divi.appendChild(para);
+
+
+
+       const delb = document.createElement("button");
+         delb.innerHTML = "del";
+        delb.setAttribute('id','my'+minnum)
+        delb.setAttribute('onclick','deletermin("mx'+minnum+'","my'+minnum+'","mz'+minnum+'")')
+        
+         delb.setAttribute('class','')
+ delb.classList.add('ind');
+   // document.getElementById('x'+num).appendChild(delb);
+   document.getElementById( "d"+tempid2 ).appendChild(delb);
+
+  const crossb = document.createElement("button");
+         crossb.innerHTML = "cross";
+        crossb.setAttribute('id','mz'+minnum)
+        crossb.setAttribute('class','')
+ crossb.classList.add('ind');
+         crossb.setAttribute('onclick','crossmin("x'+num+'","y'+num+'","z'+num+'")')
+         document.getElementById( "d"+tempid2 ).appendChild(crossb);
+
+
+
+
+
+
+     for (let i = 0; i <= num; i++) {
+       if( document.getElementById("m"+i )){
+         document.getElementById("m"+i).remove();
+        }  
+        
+   
+        }  
+           document.getElementById("myBtn" ).disabled = false;
+         for (let j= 0; j <= num; j++) {
+         if( document.getElementById("mx"+j )){
+        document.getElementById("my"+j ).disabled = false;
+          document.getElementById("mz"+j ).disabled = false;
+          }
+           if( document.getElementById("x"+j )){
+          document.getElementById("y"+j ).disabled = false;
+          document.getElementById("z"+j ).disabled = false;
+            document.getElementById("x"+j ).disabled = false;
+        }  
+        }
+        minnum++;
+  }
+  
+  
+function deletermin(a,b,c) {
+ var tempid = a.substr(1);
+document.getElementById(a).remove();
+document.getElementById(b).remove();
+document.getElementById(c).remove();
+  
+}
+
+
+function crossmin(a) {
+
+
+
+var tempid = a.substr(1);
+
+var x =document.getElementById("mx"+tempid);
+var y =document.getElementById("y" +tempid);
+var z =document.getElementById("z" +tempid);
+
+ if(minclicked[tempid]==1){
+minclicked[tempid]=0;
+//mx.style.color = mincol[tempid];
+x.classList.remove('slash'); 
+//document.getElementById("h"+tempid).appendChild(x);
+//document.getElementById("d"+tempid).appendChild(y);
+//document.getElementById("d"+tempid).appendChild(z);
+}
+else{
+
+clicked[tempid]=1;
+x.classList.add('slash');
+//x.style.color = "gray";
+//document.getElementById("Trash").appendChild(x);
+//document.getElementById("Trash").appendChild(y);
+//document.getElementById("Trash").appendChild(z);
+
+}
+}
+
+
+
 </script>
 
 </body>
-
 </html>
